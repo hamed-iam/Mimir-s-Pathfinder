@@ -7,11 +7,38 @@
   <body>
     <h1>Mimir's Pathfinder</h1>
     <canvas id="myCanvas"></canvas>
+    <div id="controls">
+      <button onclick="addRandomPoint()">Add point</button>
+      <button onclick="addRandomSegment()">Add segment</button>
+    </div>
 
     <script src="js/math/graph.js"></script>
     <script src="js/primitives/point.js"></script>
     <script src="js/primitives/segment.js"></script>
     <script>
+      function addRandomSegment() {
+        const index1 = Math.floor(Math.random() * graph.points.length);
+        const index2 = Math.floor(Math.random() * graph.points.length);
+
+        const success = graph.tryAddSegment(
+          new Segment(graph.points[index1], graph.points[index2])
+        );
+
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+      }
+
+      function addRandomPoint() {
+        const success = graph.tryAddPoint(
+          new Point(
+            Math.random() * myCanvas.width,
+            Math.random() * myCanvas.height
+          )
+        );
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        graph.draw(ctx);
+      }
+
       myCanvas.width = 600;
       myCanvas.height = 600;
 
