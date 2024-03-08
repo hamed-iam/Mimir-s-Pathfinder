@@ -28,7 +28,21 @@ class Graph {
     this.segments.splice(this.segments.indexOf(seg), 1);
   }
 
+  getSegmentsWithPoint(point) {
+    const segs = [];
+    for (const seg of this.segments) {
+      if (seg.includes(point)) {
+        segs.push(seg);
+      }
+    }
+    return segs;
+  }
+
   removePoint(p) {
+    const segs = this.getSegmentsWithPoint(p);
+    for (const seg of segs) {
+      this.removeSegment(seg);
+    }
     this.points.splice(this.points.indexOf(p), 1);
   }
 
@@ -42,6 +56,11 @@ class Graph {
       return true;
     }
     return false;
+  }
+
+  dispose() {
+    this.segments.length = 0;
+    this.points.length = 0;
   }
 
   draw(ctx) {
